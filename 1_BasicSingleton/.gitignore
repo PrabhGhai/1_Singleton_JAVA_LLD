@@ -1,8 +1,7 @@
 ### IntelliJ IDEA ###
 out/
-!**/1_BasicSingleton/src/main/**/out/
-!**/1_BasicSingleton/src/test/**/out/
-!**/1_BasicSingleton/1_BasicSingleton.iml
+!**/src/main/**/out/
+!**/src/test/**/out/
 .kotlin
 
 ### Eclipse ###
