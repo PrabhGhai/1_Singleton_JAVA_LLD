@@ -1,22 +1,21 @@
-public class Logger{
+import java.util.List;
 
-    private final Appender appender ;
+public class Logger {
+
     private static Logger loggerInstance = null;
 
-    //CONSTRUCTOR
-    private Logger(Appender appenderType){
-        appender = appenderType;
-    };
+    private List<Appender> appenders;
 
-    //GET INSTANCE
-    public static Logger getInstance(Appender appenderType)
-    {
-        if(loggerInstance == null )
-        {
-            synchronized (Logger.class){
-                if(loggerInstance == null)
-                {
-                    loggerInstance = new Logger(appenderType);
+    private Logger(List<Appender> appenders){
+        this.appenders = appenders;
+    }
+
+    public static Logger getInstance(List<Appender> appenders){
+
+        if(loggerInstance == null){
+            synchronized(Logger.class){
+                if(loggerInstance == null){
+                    loggerInstance = new Logger(appenders);
                 }
             }
         }
@@ -24,32 +23,28 @@ public class Logger{
         return loggerInstance;
     }
 
-    //------------------------------------------------------------------------------------
-
-    //INFO
-
-    public void info(String msg)
-    {
-        appender.append(LogLevel.INFO,msg);
+    public void info(String msg){
+        log(LogLevel.INFO,msg);
     }
 
-    //DEBUG
-    public void debug(String msg)
-    {
-        appender.append(LogLevel.DEBUG,msg);
+    public void debug(String msg){
+        log(LogLevel.DEBUG,msg);
     }
 
-    //WARN
-    public void warn(String msg)
-    {
-        appender.append(LogLevel.WARN,msg);
+    public void warn(String msg){
+        log(LogLevel.WARN,msg);
     }
 
-    //Error
+    public void error(String msg){
+        log(LogLevel.ERROR,msg);
+    }
 
-    public void error(String msg)
-    {
-        appender.append(LogLevel.ERROR,msg);
+    private void log(LogLevel level,String msg){
+
+        for(Appender appender : appenders){
+            appender.append(level,msg);
+        }
 
     }
+
 }
