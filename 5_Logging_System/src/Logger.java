@@ -1,22 +1,22 @@
 public class Logger{
 
-    private static LogFormatter logFormat ;
+    private final Appender appender ;
     private static Logger loggerInstance = null;
 
     //CONSTRUCTOR
-    private Logger(LogFormatter formatType){
-        logFormat = formatType;
+    private Logger(Appender appenderType){
+        appender = appenderType;
     };
 
     //GET INSTANCE
-    public static Logger getInstance(LogFormatter formatType)
+    public static Logger getInstance(Appender appenderType)
     {
         if(loggerInstance == null )
         {
             synchronized (Logger.class){
                 if(loggerInstance == null)
                 {
-                    loggerInstance = new Logger(formatType);
+                    loggerInstance = new Logger(appenderType);
                 }
             }
         }
@@ -30,33 +30,26 @@ public class Logger{
 
     public void info(String msg)
     {
-        String formattedMsg = logFormat.format(LogLevel.INFO,msg);
-        System.out.println(formattedMsg);
-
+        appender.append(LogLevel.INFO,msg);
     }
 
     //DEBUG
     public void debug(String msg)
     {
-        String formattedMsg = logFormat.format(LogLevel.DEBUG,msg);
-        System.out.println(formattedMsg);
-
+        appender.append(LogLevel.DEBUG,msg);
     }
 
     //WARN
     public void warn(String msg)
     {
-        String formattedMsg = logFormat.format(LogLevel.WARN,msg);
-        System.out.println(formattedMsg);
-
+        appender.append(LogLevel.WARN,msg);
     }
 
     //Error
 
     public void error(String msg)
     {
-        String formattedMsg = logFormat.format(LogLevel.ERROR,msg);
-        System.out.println(formattedMsg);
+        appender.append(LogLevel.ERROR,msg);
 
     }
 }

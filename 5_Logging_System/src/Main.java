@@ -2,8 +2,9 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //Dependency Injection
-        Logger log = Logger.getInstance(new PipeFormatter());
+
+        Appender appender = new FileAppender(new BracketFormatter());
+        Logger log = Logger.getInstance(appender);
         log.info("API hits");
         log.error("Not getting data");
 
